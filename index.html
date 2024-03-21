@@ -1,0 +1,201 @@
+<?php
+// 1013 - The Greatest
+$input = readline();
+$values = explode(" ", $input);
+$a = (int)$values[0];
+$b = (int)$values[1];
+$c = (int)$values[2];
+$maxAB = ($a + $b + abs($a - $b)) / 2;
+$maxABC = ($maxAB + $c + abs($maxAB - $c)) / 2;
+echo $maxABC . " eh o maior\n";
+
+// 1018 - Banknotes
+$amount = (int)readline();
+echo $amount . "\n";
+$notes = [100, 50, 20, 10, 5, 2, 1];
+foreach ($notes as $note) {
+    $quantity = (int)($amount / $note);
+    echo $quantity . " nota(s) de R$ " . $note . ",00\n";
+    $amount %= $note;
+}
+
+// 1133 - Rest of a Division
+$x = (int)readline();
+$y = (int)readline();
+$start = min($x, $y) + 1;
+$end = max($x, $y);
+for ($i = $start; $i < $end; $i++) {
+    if ($i % 5 === 2 || $i % 5 === 3) {
+        echo $i . "\n";
+    }
+}
+
+// 1101 - Sequence of Numbers and Sum
+while (true) {
+    $input = readline();
+    $values = explode(" ", $input);
+    $m = (int)$values[0];
+    $n = (int)$values[1];
+    if ($m <= 0 || $n <= 0) {
+        break;
+    }
+    $sum = 0;
+    $sequence = "";
+    if ($m > $n) {
+        $temp = $m;
+        $m = $n;
+        $n = $temp;
+    }
+    for ($i = $m; $i <= $n; $i++) {
+        $sum += $i;
+        $sequence .= $i . " ";
+    }
+    echo $sequence . "Sum=" . $sum . "\n";
+}
+
+// 1789 - The Race of Slugs
+while (($line = readline()) !== false) {
+    $slugs = explode(" ", $line);
+    $max_speed = max($slugs);
+    if ($max_speed < 10) {
+        echo "1\n";
+    } elseif ($max_speed >= 10 && $max_speed < 20) {
+        echo "2\n";
+    } else {
+        echo "3\n";
+    }
+}
+
+// 1071 - Sum of Consecutive Odd Numbers I
+$x = (int)readline();
+$y = (int)readline();
+$start = min($x, $y) + 1;
+$end = max($x, $y);
+$sum = 0;
+for ($i = $start; $i < $end; $i++) {
+    if ($i % 2 !== 0) {
+        $sum += $i;
+    }
+}
+echo $sum . "\n";
+
+// 1103 - Alarm Clock
+while (true) {
+    $input = explode(" ", readline());
+    $h1 = (int)$input[0];
+    $m1 = (int)$input[1];
+    $h2 = (int)$input[2];
+    $m2 = (int)$input[3];
+    if ($h1 == 0 && $m1 == 0 && $h2 == 0 && $m2 == 0) {
+        break;
+    }
+    $total_minutes1 = $h1 * 60 + $m1;
+    $total_minutes2 = $h2 * 60 + $m2;
+    if ($total_minutes1 < $total_minutes2) {
+        echo ($total_minutes2 - $total_minutes1) . "\n";
+    } else {
+        echo (1440 - $total_minutes1 + $total_minutes2) . "\n";
+    }
+}
+
+// 1024 - Encryption
+function decrypt($string) {
+    $length = strlen($string);
+    $halfLength = (int)($length / 2);
+    $result = "";
+    for ($i = 0; $i < $length; $i++) {
+        if (ctype_alpha($string[$i])) {
+            $result .= chr(ord($string[$i]) + 3);
+        } else {
+            $result .= $string[$i];
+        }
+    }
+    return strrev(substr($result, 0, $halfLength)) . substr($result, $halfLength);
+}
+
+$n = (int)readline();
+for ($i = 0; $i < $n; $i++) {
+    $encrypted_string = readline();
+    echo decrypt($encrypted_string) . "\n";
+}
+
+// 1168 - LED
+$leds = [
+    0 => 6, 1 => 2, 2 => 5, 3 => 5, 4 => 4,
+    5 => 5, 6 => 6, 7 => 3, 8 => 7, 9 => 6
+];
+
+$n = (int)readline();
+for ($i = 0; $i < $n; $i++) {
+    $number = readline();
+    $totalLeds = 0;
+    for ($j = 0; $j < strlen($number); $j++) {
+        $totalLeds += $leds[$number[$j]];
+    }
+    echo $totalLeds . " leds\n";
+}
+
+// 1253 - Caesar Cipher
+function decrypt($string, $shift) {
+    $result = "";
+    $length = strlen($string);
+    for ($i = 0; $i < $length; $i++) {
+        $ascii = ord($string[$i]) - $shift;
+        if ($ascii < 65) {
+            $ascii += 26;
+        }
+        $result .= chr($ascii);
+    }
+    return $result;
+}
+
+$n = (int)readline();
+for ($i = 0; $i < $n; $i++) {
+    $line = readline();
+    $shift = (int)readline();
+    echo decrypt($line, $shift) . "\n";
+}
+
+// 1259 - Even and Odd
+$n = (int)readline();
+$even = [];
+$odd = [];
+for ($i = 0; $i < $n; $i++) {
+    $number = (int)readline();
+    if ($number % 2 == 0) {
+        $even[] = $number;
+    } else {
+        $odd[] = $number;
+    }
+}
+sort($even);
+sort($odd, SORT_DESC);
+foreach ($even as $e) {
+    echo $e . "\n";
+}
+foreach ($odd as $o) {
+    echo $o . "\n";
+}
+
+// 1028 - Collectable Cards
+function gcd($a, $b) {
+    while ($b != 0) {
+        $temp = $b;
+        $b = $a % $b;
+        $a = $temp;
+    }
+    return $a;
+}
+
+$n = (int)readline();
+for ($i = 0; $i < $n; $i++) {
+    $input = explode(" ", readline());
+    $a = (int)$input[0];
+    $b = (int)$input[1];
+    echo gcd($a, $b) . "\n";
+}
+
+
+
+
+?>
